@@ -3,124 +3,124 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vpoelman <vpoelman@student.s19.be>         +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 21:45:06 by vpoelman          #+#    #+#             */
-/*   Updated: 2025/01/06 21:45:08 by vpoelman         ###   ########.fr       */
+/*   Updated: 2025/01/06 22:58:58 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*read_and_store(int fd, char *stash)
+static char	*read_and_store(int fd, char *str_storage)
 {
-	char	buff[BUFFER_SIZE + 1];
-	int		readed;
-	char	*tmp;
+	char	buffer[BUFFER_SIZE + 1];
+	int		bytes_read;
+	char	*temp_text;
 
-	readed = 1;
-	while (readed > 0)
+	bytes_read = 1;
+	while (bytes_read > 0)
 	{
-		readed = read(fd, buff, BUFFER_SIZE);
-		if (readed == -1)
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
 		{
-			free(stash);
+			free(str_storage);
 			return (NULL);
 		}
-		buff[readed] = '\0';
-		tmp = ft_strjoin(stash, buff);
-		free(stash);
-		stash = tmp;
-		if (stash && ft_strchr(stash, '\n'))
+		buffer[bytes_read] = '\0';
+		temp_text = ft_strjoin(str_storage, buffer);
+		free(str_storage);
+		str_storage = temp_text;
+		if (str_storage && ft_strchr(str_storage, '\n'))
 			break ;
 	}
-	return (stash);
+	return (str_storage);
 }
 
-static int	find_line_length(char *s)
+static int	find_line_length(char *text)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (text[i] && text[i] != '\n')
 		i++;
-	if (s[i] == '\n')
+	if (text[i] == '\n')
 		return (i + 2);
 	return (i + 1);
 }
 
-static char	*extract_line(char *s)
+static char	*extract_line(char *text)
 {
-	char	*line;
+	char	*current_line;
 	int		i;
-	int		len_line;
+	int		line_length;
 
-	if (!s || !*s)
+	if (!text || !*text)
 		return (NULL);
-	len_line = find_line_length(s);
-	line = malloc(sizeof(char) * (len_line));
-	if (!line)
+	line_length = find_line_length(text);
+	current_line = malloc(sizeof(char) * (line_length));
+	if (!current_line)
 		return (NULL);
 	i = 0;
-	while (s[i] != '\n' && s[i] != '\0')
+	while (text[i] != '\n' && text[i] != '\0')
 	{
-		line[i] = s[i];
+		current_line[i] = text[i];
 		i++;
 	}
-	if (s[i] == '\n')
+	if (text[i] == '\n')
 	{
-		line[i] = '\n';
-		line[i + 1] = '\0';
+		current_line[i] = '\n';
+		current_line[i + 1] = '\0';
 	}
 	else
-		line[i] = '\0';
-	return (line);
+		current_line[i] = '\0';
+	return (current_line);
 }
 
-static char	*update_remaining_text(char *s)
+static char	*update_remaining_text(char *text)
 {
-	char	*stash;
+	char	*remaining_text;
 	int		i;
 
 	i = 0;
-	while (s[i] && s[i] != '\n')
+	while (text[i] && text[i] != '\n')
 		i++;
-	if (!s[i])
+	if (!text[i])
 	{
-		free(s);
+		free(text);
 		return (NULL);
 	}
-	stash = ft_strdup(s + i + 1);
-	free(s);
-	return (stash);
+	remaining_text = ft_strdup(text + i + 1);
+	free(text);
+	return (remaining_text);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stash = NULL;
-	char		*line;
+	static char	*str_storage = NULL;
+	char		*current_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		if (stash)
+		if (str_storage)
 		{
-			free(stash);
-			stash = NULL;
+			free(str_storage);
+			str_storage = NULL;
 		}
 		return (NULL);
 	}
-	stash = read_and_store(fd, stash);
-	if (!stash)
+	str_storage = read_and_store(fd, str_storage);
+	if (!str_storage)
 		return (NULL);
-	line = extract_line(stash);
-	if (!line)
+	current_line = extract_line(str_storage);
+	if (!current_line)
 	{
-		free(stash);
-		stash = NULL;
+		free(str_storage);
+		str_storage = NULL;
 		return (NULL);
 	}
-	stash = update_remaining_text(stash);
-	return (line);
+	str_storage = update_remaining_text(str_storage);
+	return (current_line);
 }
 /*
 int main()
