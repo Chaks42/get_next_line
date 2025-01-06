@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: trouilla <trouilla@student.s19.be>         +#+  +:+       +#+        */
+/*   By: vpoelman <vpoelman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 17:47:30 by trouilla          #+#    #+#             */
-/*   Updated: 2024/11/06 18:12:12 by trouilla         ###   ########.fr       */
+/*   Created: 2025/01/06 21:45:14 by vpoelman          #+#    #+#             */
+/*   Updated: 2025/01/06 21:45:16 by vpoelman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
