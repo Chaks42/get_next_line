@@ -20,6 +20,11 @@
 #  define BUFFER_SIZE 42
 # endif
 
+# if BUFFER_SIZE > trouver la taille
+#  ndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 char	*get_next_line(int fd);
 char	*ft_strjoin(char const *s1, char const *s2);
 int		ft_strchr(const char *s, char c);
