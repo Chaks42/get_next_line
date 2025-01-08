@@ -6,7 +6,7 @@
 /*   By: vpoelman <vpoelman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:51:17 by vpoelman          #+#    #+#             */
-/*   Updated: 2024/10/30 13:51:17 by vpoelman         ###   ########.fr       */
+/*   Updated: 2025/01/08 13:35:21 by vpoelman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
-# endif
-# if BUFFER_SIZE > 1000000
+# elif BUFFER_SIZE > 1000000
+#  undef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
