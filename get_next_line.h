@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vpoelman <vpoelman@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/06 21:45:21 by vpoelman          #+#    #+#             */
-/*   Updated: 2025/01/06 21:45:23 by vpoelman         ###   ########.fr       */
+/*   Created: 2024/10/30 13:51:17 by vpoelman          #+#    #+#             */
+/*   Updated: 2024/10/30 13:51:17 by vpoelman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,14 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
-# if BUFFER_SIZE > trouver la taille
-#  ndef BUFFER_SIZE
+# if BUFFER_SIZE > 1000000
 #  define BUFFER_SIZE 42
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char const *s1, char const *s2);
-int		ft_strchr(const char *s, char c);
+char	*ft_strjoin(char *s1, const char *s2);
+char	*ft_strchr(const char *s, int c);
 size_t	ft_strlen(const char *s);
-char	*ft_strdup(const char *src);
+char	*ft_strdup(const char *s);
 
 #endif
